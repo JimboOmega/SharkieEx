@@ -1,7 +1,7 @@
 
 var nomGenerator = {
   
-  requestNoms: function(target) {
+  requestNoms: function(target, preferredSize) {
     var req = new XMLHttpRequest();
     req.open("GET", target + ".xml", true);
     req.onload = this.processStats_.bind(this);
@@ -10,7 +10,13 @@ var nomGenerator = {
 
   init: function() {
     chrome.tabs.getSelected(null,function(tab) {
-      this.requestNoms(tab.url)
+		chrome.storage.sync.get({
+			preferredSize: 'M'
+		}, function(items) {
+			this.preferredSize = items.preferredSize
+			this.requestNoms(tab.url)			
+      }.bind(this))
+      
     }.bind(this));
   },
   
@@ -18,10 +24,18 @@ var nomGenerator = {
 
     var variants = e.target.responseXML.querySelectorAll('variant');
     for (var i = 0; i < variants.length; i++) {     
-      var newP = document.createElement('p')
-      var text = document.createTextNode(variants[i].querySelectorAll('title')[0].childNodes[0].nodeValue + " " + variants[i].querySelectorAll('inventory-quantity')[0].childNodes[0].nodeValue);
-      newP.appendChild(text)
-      document.body.appendChild(newP);
+	  var size_name = variants[i].querySelectorAll('title')[0].childNodes[0].nodeValue
+	  var count = variants[i].querySelectorAll('inventory-quantity')[0].childNodes[0].nodeValue
+
+	  if(size_name == this.preferredSize)
+	  {
+	    $('body').append('<b>'+ size_name + " " + count + '</b>')
+	  }
+      else
+	  {
+	    $('body').append('<p>' + size_name + " " + count + '</p>')
+	  }
+
     }
   }
 }
