@@ -11,8 +11,12 @@
 	"storage"
   ],
   "browser_action": {
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": "sharkie48.png"
   },
+  "icons": { "16": "sharkie16.png",
+           "48": "sharkie48.png",
+          "128": "sharkie128.png" },
+
   "options_page": "options.html"
 }
