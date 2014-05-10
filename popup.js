@@ -21,22 +21,27 @@ var nomGenerator = {
   },
   
   processStats_: function (e) {
+	if(e.target.statusText=="Not Found")
+	{
+	}
+	else
+	{
+		var variants = e.target.responseXML.querySelectorAll('variant');
+		for (var i = 0; i < variants.length; i++) {     
+		  var size_name = variants[i].querySelectorAll('title')[0].childNodes[0].nodeValue
+		  var count = variants[i].querySelectorAll('inventory-quantity')[0].childNodes[0].nodeValue
 
-    var variants = e.target.responseXML.querySelectorAll('variant');
-    for (var i = 0; i < variants.length; i++) {     
-	  var size_name = variants[i].querySelectorAll('title')[0].childNodes[0].nodeValue
-	  var count = variants[i].querySelectorAll('inventory-quantity')[0].childNodes[0].nodeValue
+		  if(size_name == this.preferredSize)
+		  {
+			$('body').append('<b>'+ size_name + " " + count + '</b>')
+		  }
+		  else
+		  {
+			$('body').append('<p>' + size_name + " " + count + '</p>')
+		  }
 
-	  if(size_name == this.preferredSize)
-	  {
-	    $('body').append('<b>'+ size_name + " " + count + '</b>')
-	  }
-      else
-	  {
-	    $('body').append('<p>' + size_name + " " + count + '</p>')
-	  }
-
-    }
+		}
+	}
   }
 }
 

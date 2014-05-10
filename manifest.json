@@ -8,8 +8,13 @@
   "permissions": [
     "http://blackmilkclothing.com//",
     "tabs",
-	"storage"
+	"storage",
+	"activeTab"
   ],
+  "content_scripts": [{
+	"matches": ["http://blackmilkclothing.com/*"],
+	"js": ["jquery-1.11.0.min.js","keep_nomming.js"]
+	}],
   "browser_action": {
     "default_popup": "popup.html",
     "default_icon": "sharkie48.png"
