@@ -14,7 +14,7 @@
   ],
   "content_scripts": [{
 	"matches": ["http://blackmilkclothing.com/*", "https://blackmilkclothing.com/*"],
-	"js": ["jquery-1.11.0.min.js","keep_nomming.js"]
+	"js": ["jquery-1.11.0.min.js","wait_until_exists.js","keep_nomming.js"]
 	}],
   "browser_action": {
     "default_popup": "popup.html",

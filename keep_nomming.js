@@ -5,6 +5,7 @@ function click_on_preferred_size(preferredSize)
     return size_regex.test($(this).text()); 
   })
   size_divs.find('input').click();
+  
 }
 
 $(function(){
@@ -24,6 +25,11 @@ $(function(){
   }
   //click checkout
   $('#checkout').click()
-  
-  $('billing_address_selector')
+  //clicks "continue to next step"
+  $('#commit-button').click()
+  $('#paypal_express').click()
+  jQuery("#paypal-payments").waitUntilExists(function(){
+    jQuery("#paypal-payments").find('input').click()
+	jQuery("#complete-purchase").click()
+  })
 })
