@@ -8,12 +8,14 @@
   "permissions": [
     "http://blackmilkclothing.com//",
 	"https://blackmilkclothing.com//",
+    "http://us.blackmilkclothing.com//",
+	"https://us.blackmilkclothing.com//",
     "tabs",
 	"storage",
 	"activeTab"
   ],
   "content_scripts": [{
-	"matches": ["http://blackmilkclothing.com/*", "https://blackmilkclothing.com/*"],
+	"matches": ["http://blackmilkclothing.com/*", "https://blackmilkclothing.com/*","http://us.blackmilkclothing.com/*", "https://us.blackmilkclothing.com/*"],
 	"js": ["jquery-1.11.0.min.js","wait_until_exists.js","keep_nomming.js"]
 	}],
   "browser_action": {
