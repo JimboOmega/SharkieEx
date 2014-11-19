@@ -19,11 +19,15 @@ function save_options() {
 function restore_options() {
   chrome.storage.sync.get({
     preferredSize: 'M',
-	preferredSite: 'us.blackmilkclothing.com'
+	preferredSite: 'us.blackmilkclothing.com',
+	storedItemLinks: []
   }, function(items) {
     document.getElementById('size').value = items.preferredSize;
 	document.getElementById('site').value = items.preferredSite;
-  });
+	$.each(items.storedItemLinks, function(index,link){
+			$('#item-urls').append('<A HREF="' + link + '">' + link + '<br>')
+		})
+	});
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 $( function() {document.getElementById('save').addEventListener('click',save_options)});
