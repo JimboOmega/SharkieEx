@@ -11,8 +11,11 @@ var nomGenerator = {
   init: function() {
     chrome.tabs.getSelected(null,function(tab) {
 		chrome.storage.sync.get({
-			preferredSize: 'M'
+			preferredSize: 'M',
+			goingCrazy: false
 		}, function(items) {
+			buyingModeText = items.goingCrazy ? "On" : "Off"
+			$('#buying-mode').text(buyingModeText)
 			this.preferredSize = items.preferredSize
 			this.requestNoms(tab.url)			
       }.bind(this))

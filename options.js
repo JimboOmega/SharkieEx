@@ -24,10 +24,20 @@ function restore_options() {
   }, function(items) {
     document.getElementById('size').value = items.preferredSize;
 	document.getElementById('site').value = items.preferredSite;
+	$('#item-urls').empty()
 	$.each(items.storedItemLinks, function(index,link){
-			$('#item-urls').append('<A HREF="' + link + '">' + link + '<br>')
+			$('#item-urls').append('<A class="remove_item" id="'+index+'" HREF="#">' + link + '<br>')
 		})
 	});
 }
 document.addEventListener('DOMContentLoaded', restore_options);
 $( function() {document.getElementById('save').addEventListener('click',save_options)});
+
+$("#item-urls").click(function(event){
+  event.preventDefault();
+  chrome.storage.sync.get({
+	storedItemLinks: []
+  }, function(items) {
+	chrome.storage.sync.set({storedItemLinks: items.storedItemLinks.splice(event.target.id,1)}, restore_options)
+    })
+})

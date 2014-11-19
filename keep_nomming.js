@@ -5,8 +5,8 @@ function click_on_preferred_size(preferredSize)
     return size_regex.test($(this).text()); 
   })
   size_divs.find('input').click();
-  
 }
+
 
 function complete_purchase_and_stop_nomming(){
   chrome.storage.sync.set({
@@ -17,7 +17,7 @@ function complete_purchase_and_stop_nomming(){
 
 }
 
-function go_forth_and_buy(){
+function go_forth_and_buy(checkout){
   //pick first search result (if the search page)
   $('.productfirst img').click()
   //if this is the size selection page, pick the user's size and add to cart
@@ -32,22 +32,64 @@ function go_forth_and_buy(){
       $('#add-to-cart').click()
 	})
   }
-  //click checkout
-  $('#checkout').click()
-  //clicks "continue to next step"
-  $('#commit-button').click()
-  $('#paypal_express').click()
-  jQuery("#paypal-payments").waitUntilExists(complete_purchase_and_stop_nomming)
+  if(checkout){
+	  //click checkout
+	  $('#checkout').click()
+	  //clicks "continue to next step"
+	  $('#commit-button').click()
+	  $('#paypal_express').click()
+	  //for the new form; clicks paypal button
+	  $("label:contains('PayPal')").click()
+	  $("input[value='Place my order']")[0].click()
+	  jQuery("#paypal-payments").waitUntilExists(complete_purchase_and_stop_nomming)
+	}
 }
 
 $(function(){
   chrome.storage.sync.get({
-      goingCrazy: false
+      goingCrazy: false,
+	  storedItemBuying: false,
+	  storedItemActive: 0,
+	  storedItemLinks: []
   },
   function(storage_results){
     if(storage_results.goingCrazy)
 	{
-      go_forth_and_buy()
+		if(storage_results.storedItemBuying)
+		{
+			console.log("yo!")
+			if(storage_results.storedItemActive == storage_results.storedItemLinks.length - 1)
+			{
+				console.log("dude!")
+				go_forth_and_buy(true)
+			}
+			else
+			{	
+				console.log("yay!")
+				is_cart = window.location.href.indexOf("blackmilkclothing.com/cart") > -1
+				console.log(is_cart)
+				
+				if(!is_cart)
+				{
+					console.log("ball!")
+					go_forth_and_buy(false)
+				}
+				else
+				{
+					console.log("er!")
+					chrome.runtime.sendMessage({next_item: "nom"}, function(response) {
+						console.log("whatever")
+					});
+					
+				}  						
+				
+			}
+		}
+		else{
+			go_forth_and_buy(true)
+		}
 	}
+	
+	
   })
 })
