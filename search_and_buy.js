@@ -13,10 +13,11 @@ $("#search-and-buy-button").click(function() {
 		searchURL = "http://" + items.preferredSite + "/search?type=product&q=" + searchString 
 		console.log(searchURL)
 		chrome.storage.sync.set({
-			goingCrazy: true
-			
-		})
-		switch_tab(search_url)
+			goingCrazy: true		
+			}, 
+			function(){switch_tab(searchURL)}
+		)
+		
 	})
   
 })
