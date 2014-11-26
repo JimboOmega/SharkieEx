@@ -38,6 +38,8 @@ $("#item-urls").click(function(event){
   chrome.storage.sync.get({
 	storedItemLinks: []
   }, function(items) {
-	chrome.storage.sync.set({storedItemLinks: items.storedItemLinks.splice(event.target.id,1)}, restore_options)
+	array = items.storedItemLinks
+	array.splice(event.target.id,1)
+	chrome.storage.sync.set({storedItemLinks: array}, restore_options)
     })
 })
