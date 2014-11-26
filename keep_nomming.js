@@ -36,12 +36,26 @@ function go_forth_and_buy(checkout){
 	  //click checkout
 	  $('#checkout').click()
 	  //clicks "continue to next step"
-	  $('#commit-button').click()
-	  $('#paypal_express').click()
+	  $('#commit-button').click()	  
+	  
+	  //clicks continue (in shopify)
+	  if($(".current-step-contact_information").length > 0)
+	  {
+		$(".btn[type=submit][value=Continue]").click()	  	  
+	   }
 	  //for the new form; clicks paypal button
-	  $("label:contains('PayPal')").click()
-	  $("input[value='Place my order']")[0].click()
-	  jQuery("#paypal-payments").waitUntilExists(complete_purchase_and_stop_nomming)
+	  if($(".current-step-shipping_and_payment_method").length > 0)
+      {
+		shutdown_id = setInterval(function(){
+			if(!($(".icon.icon--spinner").length > 0))
+			{
+				$("label:contains('PayPal')").click()
+				$("input[value='Place my order']")[0].click()
+				clearInterval(shutdown_id)
+				complete_purchase_and_stop_nomming()
+			}		
+		}, 500)	
+	  }
 	}
 }
 
@@ -56,29 +70,24 @@ $(function(){
     if(storage_results.goingCrazy)
 	{
 		if(storage_results.storedItemBuying)
-		{
-			console.log("yo!")
+		{			
 			if(storage_results.storedItemActive == storage_results.storedItemLinks.length - 1)
-			{
-				console.log("dude!")
+			{			
 				go_forth_and_buy(true)
 			}
 			else
-			{	
-				console.log("yay!")
+			{					
 				is_cart = window.location.href.indexOf("blackmilkclothing.com/cart") > -1
 				console.log(is_cart)
 				
 				if(!is_cart)
-				{
-					console.log("ball!")
+				{					
 					go_forth_and_buy(false)
 				}
 				else
-				{
-					console.log("er!")
+				{					
 					chrome.runtime.sendMessage({next_item: "nom"}, function(response) {
-						console.log("whatever")
+						console.log("nomming next item...")
 					});
 					
 				}  						

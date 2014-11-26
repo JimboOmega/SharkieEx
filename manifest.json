@@ -3,7 +3,7 @@
 
   "name": "Sharkie Ex",
   "description": "Sharkie Enhancements",
-  "version": "2.0",
+  "version": "2.0.2",
 
   "permissions": [
     "http://blackmilkclothing.com//",
@@ -17,7 +17,7 @@
   ],   
   "content_scripts": [{
 	"matches": ["http://blackmilkclothing.com/*", "https://blackmilkclothing.com/*","http://us.blackmilkclothing.com/*", "https://us.blackmilkclothing.com/*", "https://checkout.shopify.com/*"],
-	"js": ["jquery-1.11.0.min.js","wait_until_exists.js","keep_nomming.js"]
+	"js": ["jquery-1.11.0.min.js","keep_nomming.js"]
 	}],
   "browser_action": {
     "default_popup": "popup.html",

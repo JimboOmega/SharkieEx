@@ -19,7 +19,7 @@ $("#search-and-buy-button").click(function() {
 		)
 		
 	})
-  
+  $('#buying-mode').text("On")
 })
 
 $("#stop-button").click(function() {
@@ -70,8 +70,7 @@ function jump_to_next_page(){
 	  storedItemActive: 0,
 	  storedItemLinks: []
   },
-  function(storage_results){
-	console.log(storage_results.storedItemActive+1)
+  function(storage_results){	
 	chrome.storage.sync.set({
 		storedItemBuying: true,
 		storedItemActive: storage_results.storedItemActive+1,
