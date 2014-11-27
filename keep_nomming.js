@@ -73,7 +73,10 @@ $(function(){
 		{			
 			if(storage_results.storedItemActive == storage_results.storedItemLinks.length - 1)
 			{			
-				go_forth_and_buy(true)
+				chrome.storage.sync.set({					
+					storedItemBuying: false,
+					storedItemActive: 0},function(){go_forth_and_buy(true)})
+				
 			}
 			else
 			{					
