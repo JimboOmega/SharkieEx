@@ -1,6 +1,6 @@
 function click_on_preferred_size(preferredSize)
 {
-  var size_regex = new RegExp("[ \t\r\n]"+preferredSize+ "[ \t\r\n]")
+  var size_regex = new RegExp("[ \t\r\n]("+preferredSize+ ")|(OSFA)[ \t\r\n]")
   size_divs = $(".prodop").filter(function () {
     return size_regex.test($(this).text()); 
   })
